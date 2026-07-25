@@ -3,11 +3,11 @@ name: Ingesta Diaria InfoJobs (Capa Bronce)
 on:
   schedule:
     - cron: '0 2 * * *' # Se ejecuta todos los días a las 02:00 AM UTC
-  workflow_dispatch: # Te permite ejecutarlo a mano con un botón para probar
+  workflow_dispatch:
 
 jobs:
   extraer-datos:
-    runs-on: ubuntu-latest # El ordenador que te presta GitHub
+    runs-on: ubuntu-latest
     
     steps:
       - name: Descargar mi código
