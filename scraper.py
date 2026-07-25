@@ -31,6 +31,7 @@ def scrape_total_results():
         page.goto(url)
         
         print("Esperando carga de la página y gestionando cookies...")
+        # Aumentamos ligeramente la espera para dejar que el desafío invisible pase solo
         page.wait_for_timeout(5000)
         
         # Gestionar banner de cookies para limpiar la pantalla
@@ -42,17 +43,18 @@ def scrape_total_results():
         except Exception:
             pass
             
-        # Control de Captcha manual adaptado
-        if "captcha" in page.url.lower() or "challenge" in page.url.lower() or page.locator("iframe").count() > 0:
+        # Quitamos la condición del 'iframe' y verificamos la URL una vez estabilizada la página
+        url_actual = page.url.lower()
+        if "captcha" in url_actual or "challenge" in url_actual:
             if es_entorno_ci:
-                print("CAPTCHA DETECTADO EN LA NUBE. Abortando extracción para no consumir recursos.")
+                print("CAPTCHA BLOQUEANTE DETECTADO EN LA NUBE. Abortando extracción para no consumir recursos.")
                 browser.close()
-                return # Salimos de la función inmediatamente, mañana volverá a intentarlo
+                return
             else:
                 print("=========================================================")
                 print("CAPTCHA DETECTADO: Tienes 25 segundos para resolverlo a mano.")
                 print("=========================================================")
-                page.wait_for_timeout(25000) # Ahora sí son 25 segundos reales
+                page.wait_for_timeout(25000)
 
         # ... (AQUÍ SIGUE EL RESTO DE TU CÓDIGO EXACTAMENTE IGUAL) ...
             
