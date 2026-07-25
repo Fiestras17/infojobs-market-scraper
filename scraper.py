@@ -55,8 +55,6 @@ def scrape_total_results():
                 print("CAPTCHA DETECTADO: Tienes 25 segundos para resolverlo a mano.")
                 print("=========================================================")
                 page.wait_for_timeout(25000)
-
-        # ... (AQUÍ SIGUE EL RESTO DE TU CÓDIGO EXACTAMENTE IGUAL) ...
             
         # 1. EXTRACTOR DEL TOTAL GLOBAL (h1#main-heading)
         total_ofertas = 0
@@ -151,6 +149,7 @@ def scrape_total_results():
                 resultados_presencialidad[pres] = 0
 
 
+        # 4. EXTRACTOR DE TIPO DE JORNADA
         resultados_jornada = {}
         
         # 1. Usamos una lista de tuplas para evitar los "if" anidados
@@ -195,6 +194,8 @@ def scrape_total_results():
             resultados_jornada["Otra jornada"] = 0
 
 
+
+        # 5. EXTRACTOR DE TIPO DE CONTRATO
         resultados_indefinido = {}
         # 1. Inicializamos la variable a 0 por si el try falla (evita NameError)
         contratos_indefinidos = 0 
@@ -254,7 +255,7 @@ def scrape_total_results():
         
         browser.close()
         
-    # PERSISTENCIA EN CSV (HISTÓRICO MLOps)
+    # PERSISTENCIA EN CSV
     if array_final[0] > 0 or any(val > 0 for val in array_final[1:]):
         archivo_salida = "infojobs_historico_ofertas.csv"
         ahora = datetime.now().strftime("%Y-%m-%d")
