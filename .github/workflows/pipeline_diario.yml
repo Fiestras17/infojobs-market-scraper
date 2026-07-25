@@ -1,0 +1,33 @@
+name: Ingesta Diaria InfoJobs (Capa Bronce)
+
+on:
+  schedule:
+    - cron: '0 2 * * *' # Se ejecuta todos los días a las 02:00 AM UTC
+  workflow_dispatch: # Te permite ejecutarlo a mano con un botón para probar
+
+jobs:
+  extraer-datos:
+    runs-on: ubuntu-latest # El ordenador que te presta GitHub
+    
+    steps:
+      - name: Descargar mi código
+        uses: actions/checkout@v3
+
+      - name: Instalar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Instalar librerías y navegadores
+        run: |
+          pip install -r requirements.txt
+          playwright install chromium
+
+      - name: Ejecutar el Scraper
+        run: python scraper.py
+
+      - name: Guardar el CSV en GitHub automáticamente
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "Actualización diaria: Histórico de ofertas"
+          file_pattern: "*.csv"
