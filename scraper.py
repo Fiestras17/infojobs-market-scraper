@@ -152,7 +152,7 @@ def scrape_total_results():
         # 4. EXTRACTOR DE TIPO DE JORNADA
         resultados_jornada = {}
         
-        # 1. Usamos una lista de tuplas para evitar los "if" anidados
+        # 1. Usamos una lista de tuplas
         tipos_jornada = [
             ("1", "Completa"),
             ("10", "Indiferente"),
@@ -248,7 +248,7 @@ def scrape_total_results():
             resultados_presencialidad['4'],
             resultados_indefinido["indefinidos"],
             resultados_indefinido["no_indefinidos"],
-            json.dumps(resultados_jornada, ensure_ascii=False) # <--- Aquí metes el diccionario
+            json.dumps(resultados_jornada, ensure_ascii=False) 
         ]
         
         print(f"Array listo para ingesta: {array_final}")
